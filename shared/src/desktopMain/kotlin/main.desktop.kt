@@ -5,8 +5,3 @@ actual fun getPlatformName(): String = "Desktop"
 
 @Composable fun MainView() = App()
 
-@Preview
-@Composable
-fun AppPreview() {
-    App()
-}
