@@ -56,6 +56,8 @@ kotlin {
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.4.3")
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
+                // https://mvnrepository.com/artifact/com.google.accompanist/accompanist-systemuicontroller
+                implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
             }
         }
         val iosX64Main by getting
