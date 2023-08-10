@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import composables.ShoesListingScreen
 import dev.icerock.moko.mvvm.compose.getViewModel
 import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
@@ -42,7 +43,8 @@ fun App() {
     BirdsAppTheme {
         val birdsViewModel: BirdsViewModel = getViewModel<BirdsViewModel>(Unit,
                                                                           viewModelFactory { BirdsViewModel() })
-        BirdsPage(birdsViewModel)
+        //BirdsPage(birdsViewModel)
+        ShoesListingScreen()
     }
 }
 
