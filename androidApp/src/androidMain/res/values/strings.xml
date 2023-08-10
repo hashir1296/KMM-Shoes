@@ -1,4 +1,3 @@
 <resources>
     <string name="app_name" translatable="false">Shoe Shop</string>
-    <string name="explore_collections">Explore\nCollections</string>
 </resources>

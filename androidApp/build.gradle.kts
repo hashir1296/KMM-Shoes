@@ -21,6 +21,15 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
+    packagingOptions {
+        resources.excludes.apply {
+            add("META-INF/LICENSE")
+            add("META-INF/*.properties")
+            add("META-INF/AL2.0")
+            add("META-INF/LGPL2.1")
+            add("META-INF/versions/9/previous-compilation-data.bin")
+        }
+    }
     defaultConfig {
         applicationId = "com.myapplication.MyApplication"
         minSdk = (findProperty("android.minSdk") as String).toInt()
