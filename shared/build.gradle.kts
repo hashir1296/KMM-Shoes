@@ -4,7 +4,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.9.0"
-    // id("dev.icerock.mobile.multiplatform-resources")
+   // id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -12,10 +12,9 @@ kotlin {
 
     jvm("desktop")
 
-    listOf(iosX64(),
-           iosArm64(),
-           iosSimulatorArm64())
-
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     cocoapods {
         version = "1.0.0"
@@ -26,8 +25,8 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
-          //  export("dev.icerock.moko:resources:0.23.0")
-          //  export("dev.icerock.moko:graphics:0.9.0") // toUIColor here
+         //   export("dev.icerock.moko:resources:0.23.0")
+            //  export("dev.icerock.moko:graphics:0.9.0") // toUIColor here
         }
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
@@ -47,6 +46,9 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC")
                 api("dev.icerock.moko:mvvm-core:0.16.1") // only ViewModel, EventsDispatcher, Dispatchers.UI
                 api("dev.icerock.moko:mvvm-compose:0.16.1") // api mvvm-core, getViewModel for Compose Multiplatfrom
+             //   api("dev.icerock.moko:resources:0.23.0")
+         //       api("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+
             }
         }
         val androidMain by getting {
@@ -68,7 +70,7 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies{
+            dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktorVersion")
 
             }
@@ -78,7 +80,7 @@ kotlin {
                 implementation(compose.desktop.common)
                 implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.4.3")
                 implementation("io.ktor:ktor-client-java:$ktorVersion")
-                implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3" )// Use the latest version
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")// Use the latest version
 
             }
         }
@@ -117,12 +119,9 @@ android {
 }
 dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
-   // commonMainApi("dev.icerock.moko:resources:0.23.0")
-   // commonMainApi("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
-
-   // commonTestImplementation("dev.icerock.moko:resources-test:0.23.0")
+    // commonTestImplementation("dev.icerock.moko:resources-test:0.23.0")
 }
-/*multiplatformResources{
+/*multiplatformResources {
     multiplatformResourcesPackage = "com.myapplication.common" // required
     iosBaseLocalizationRegion = "en" // optional, default "en"
 }*/

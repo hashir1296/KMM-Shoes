@@ -13,17 +13,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -51,65 +55,39 @@ fun ShoesListingScreen() {
                                   66,
                                   81))
 
-    Column(modifier = Modifier.fillMaxSize()
+    Box(modifier = Modifier.fillMaxSize()
         .background(brush = Brush.verticalGradient(colorStopsBg))
         .padding(20.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(text = "Explore\nCollections",
-                 color = Color.White,
-                 fontSize = 40.sp,
-                 lineHeight = 55.sp,
-                 fontWeight = FontWeight.Medium)
+        Column {
+            Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(text = "Explore\nCollections",
+                     color = Color.White,
+                     fontSize = 40.sp,
+                     lineHeight = 55.sp,
+                     fontWeight = FontWeight.Medium)
 
-            RoundBox(modifier = Modifier.wrapContentHeight()
-                .padding(5.dp),
-                     colors = colorStops.reversed()) {
-                RoundBox(colors = colorStops,
-                         modifier = Modifier.height(100.dp)
-                             .padding(vertical = 10.dp,
-                                      horizontal = 25.dp)) {
-                    Image(painter = painterResource("search-icon.xml"),
-                          contentDescription = null)
-                }
-            }
-        }
-        Spacer(Modifier.height(40.dp))
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-            listOfBrands().forEach { brandName ->
                 RoundBox(modifier = Modifier.wrapContentHeight()
-                    .padding(horizontal = 20.dp,
-                             vertical = 18.dp),
-                         colors = colorStops,
-                         shape = RoundedCornerShape(70)) {
-                    Text(text = brandName,
-                         color = Color.White)
+                    .padding(5.dp),
+                         colors = colorStops.reversed()) {
+                    RoundBox(colors = colorStops,
+                             modifier = Modifier.height(100.dp)
+                                 .padding(vertical = 10.dp,
+                                          horizontal = 25.dp)) {
+                        Image(painter = painterResource("search-icon.xml"),
+                              contentDescription = null)
+                    }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(40.dp))
-        val pagerState = rememberPagerState()
-        val colors = listOf<Color>(Color(80,
-                                         94,
-                                         182),
-                                   Color(107,
-                                         195,
-                                         226),
-                                   Color(235,
-                                         212,
-                                         209))
-        HorizontalPager(pageCount = listOfBrands().size,
-                        state = pagerState) {
-            ItemCard(isCurrentItem = false) {
-                Box(modifier = Modifier.fillMaxSize()
-                    .background(brush = Brush.verticalGradient(colors))) {
-                    Text(text = "$it",
-                         modifier = Modifier.align(Alignment.Center),
-                         color = Color.White)
-                }
-            }
+            Spacer(Modifier.size(20.dp))
+
+            MiddleContent(Modifier.weight(1f),
+                          colorStops)
+
+            Spacer(Modifier.size(20.dp))
+
+            BottomBar(modifier = Modifier)
         }
     }
 }
@@ -132,13 +110,14 @@ fun RoundBox(
 
 @Composable
 fun ItemCard(
+        modifier: Modifier,
         isCurrentItem: Boolean,
         content: @Composable () -> Unit,
 ) {
 
-    Card(modifier = Modifier.fillMaxHeight()
-        .fillMaxWidth().padding(horizontal = 15.dp),
-         elevation = if (isCurrentItem) 15.dp else 5.dp,
+    Card(modifier = modifier.fillMaxWidth()
+        .padding(horizontal = 15.dp),
+         elevation = 10.dp,
          shape = RoundedCornerShape(20.dp),
          content = content)
 }
@@ -147,4 +126,67 @@ fun listOfBrands() = listOf("All",
                             "Nike",
                             "Adidas",
                             "Puma")
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun BottomBar(modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically) {
+        Image(painter = painterResource("running-shoe.xml"),
+              contentDescription = null,
+              modifier = Modifier.size(30.dp))
+
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun MiddleContent(modifier: Modifier = Modifier,
+                  colors: List<Color>) {
+
+    val pagerState = rememberPagerState()
+    val colorsForPagerItem = listOf<Color>(Color(80,
+                                                 94,
+                                                 182),
+                                           Color(107,
+                                                 195,
+                                                 226),
+                                           Color(235,
+                                                 212,
+                                                 209))
+        Column(modifier = modifier.padding(10.dp)) {
+            Row(modifier = Modifier,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                listOfBrands().forEach { brandName ->
+                    RoundBox(modifier = Modifier.wrapContentHeight()
+                        .padding(horizontal = 20.dp,
+                                 vertical = 18.dp),
+                             colors = colors,
+                             shape = RoundedCornerShape(70)) {
+                        Text(text = brandName,
+                             color = Color.White)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            HorizontalPager(
+                modifier = Modifier.weight(1f),
+                pageCount = listOfBrands().size,
+                state = pagerState,
+            ) {
+                ItemCard(isCurrentItem = false,
+                         modifier = Modifier.fillMaxHeight()) {
+                    Box(modifier = Modifier.background(brush = Brush.verticalGradient(colorsForPagerItem)).blur(30
+                                                                                                                    .dp)) {
+                        Text(text = "$it",
+                             modifier = Modifier.align(Alignment.Center),
+                             color = Color.White)
+                    }
+                }
+            }
+    }
+}
 
