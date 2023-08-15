@@ -3,12 +3,11 @@ package composables
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,16 +19,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,55 +36,69 @@ import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class,
-       ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalResourceApi::class, ExperimentalFoundationApi::class
+)
 @Composable
 fun ShoesListingScreen() {
-    val colorStopsBg = listOf(Color(32,
-                                    32,
-                                    43),
-                              Color(66,
-                                    66,
-                                    81))
+    val colorStopsBg = listOf(
+        Color(
+            32, 32, 43
+        ), Color(
+            66, 66, 81
+        )
+    )
 
-    val colorStops = listOf(Color(45,
-                                  43,
-                                  57),
-                            Color(66,
-                                  66,
-                                  81))
+    val colorStops = listOf(
+        Color(
+            45, 43, 57
+        ), Color(
+            66, 66, 81
+        )
+    )
 
-    Box(modifier = Modifier.fillMaxSize()
-        .background(brush = Brush.verticalGradient(colorStopsBg))
-        .padding(20.dp)) {
-        Column {
-            Row(modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(text = "Explore\nCollections",
-                     color = Color.White,
-                     fontSize = 40.sp,
-                     lineHeight = 55.sp,
-                     fontWeight = FontWeight.Medium)
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(brush = Brush.verticalGradient(colorStopsBg))
+            .padding(20.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Explore\nCollections",
+                    color = Color.White,
+                    fontSize = 40.sp,
+                    lineHeight = 55.sp,
+                    fontWeight = FontWeight.Medium
+                )
 
-                RoundBox(modifier = Modifier.wrapContentHeight()
-                    .padding(5.dp),
-                         colors = colorStops.reversed()) {
-                    RoundBox(colors = colorStops,
-                             modifier = Modifier.height(100.dp)
-                                 .padding(vertical = 10.dp,
-                                          horizontal = 25.dp)) {
-                        Image(painter = painterResource("search-icon.xml"),
-                              contentDescription = null)
+                RoundBox(
+                    modifier = Modifier.wrapContentHeight().padding(5.dp),
+                    colors = colorStops.reversed()
+                ) {
+                    RoundBox(
+                        colors = colorStops,
+                        modifier = Modifier.height(100.dp).padding(
+                            vertical = 10.dp, horizontal = 25.dp
+                        )
+                    ) {
+                        Image(
+                            painter = painterResource("search-icon.xml"),
+                            contentDescription = null
+                        )
                     }
                 }
             }
 
-            Spacer(Modifier.size(20.dp))
-
-            MiddleContent(Modifier.weight(1f),
-                          colorStops)
-
-            Spacer(Modifier.size(20.dp))
+            MiddleContent(
+                Modifier.weight(.5f).padding(bottom = 90.dp), colorStops
+            )
 
             BottomBar(modifier = Modifier)
         }
@@ -94,99 +107,145 @@ fun ShoesListingScreen() {
 
 @Composable
 fun RoundBox(
-        colors: List<Color>,
-        modifier: Modifier = Modifier,
-        shape: Shape = RoundedCornerShape(40),
-        content: @Composable () -> Unit,
+    colors: List<Color>,
+    modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(40),
+    content: @Composable () -> Unit,
 ) {
-    Box(modifier = Modifier.wrapContentWidth()
-        .clip(shape)
-        .background(brush = Brush.verticalGradient(colors))
-        .then(modifier),
-        contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.wrapContentWidth().clip(shape)
+            .background(brush = Brush.verticalGradient(colors)).then(modifier),
+        contentAlignment = Alignment.Center
+    ) {
         content()
     }
 }
 
 @Composable
 fun ItemCard(
-        modifier: Modifier,
-        isCurrentItem: Boolean,
-        content: @Composable () -> Unit,
-) {
+    modifier: Modifier = Modifier,
+    isCurrentItem: Boolean,
+    shadowColors: List<Color>,
+    content: @Composable () -> Unit,
 
-    Card(modifier = modifier.fillMaxWidth()
-        .padding(horizontal = 15.dp),
-         elevation = 10.dp,
-         shape = RoundedCornerShape(20.dp),
-         content = content)
+    ) {
+    val paint = remember() { Paint() }
+    val shadowRadius = 50f
+    val foregroundPaint = remember() {
+        Paint().apply {
+            color = Color.Yellow
+        }
+    }
+
+    Card(
+        modifier = modifier.sha.border(
+            shape = RoundedCornerShape(20.dp),
+            brush = Brush.verticalGradient(shadowColors.reversed()),
+            width = 10.dp
+        ),
+    ) {
+        Card(
+            modifier = Modifier.fillMaxSize(),
+            shape = RoundedCornerShape(20.dp),
+            content = content,
+            elevation = 5.dp
+        )
+    }
 }
 
-fun listOfBrands() = listOf("All",
-                            "Nike",
-                            "Adidas",
-                            "Puma")
+fun listOfBrands() = listOf(
+    "All", "Nike", "Adidas", "Puma"
+)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BottomBar(modifier: Modifier = Modifier) {
-    Row(modifier = modifier.fillMaxWidth(),
+    Row(
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically) {
-        Image(painter = painterResource("running-shoe.xml"),
-              contentDescription = null,
-              modifier = Modifier.size(30.dp))
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource("running-shoe.xml"),
+            contentDescription = null,
+            modifier = Modifier.size(30.dp),
+            colorFilter = ColorFilter.tint(Color(93, 188, 219))
+        )
+        Image(
+            painter = painterResource("running-shoe.xml"),
+            contentDescription = null,
+            modifier = Modifier.size(30.dp)
+        )
+        Image(
+            painter = painterResource("running-shoe.xml"),
+            contentDescription = null,
+            modifier = Modifier.size(30.dp)
+        )
 
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MiddleContent(modifier: Modifier = Modifier,
-                  colors: List<Color>) {
+fun MiddleContent(
+    modifier: Modifier = Modifier, colors: List<Color>
+) {
 
     val pagerState = rememberPagerState()
-    val colorsForPagerItem = listOf<Color>(Color(80,
-                                                 94,
-                                                 182),
-                                           Color(107,
-                                                 195,
-                                                 226),
-                                           Color(235,
-                                                 212,
-                                                 209))
-        Column(modifier = modifier.padding(10.dp)) {
-            Row(modifier = Modifier,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                listOfBrands().forEach { brandName ->
-                    RoundBox(modifier = Modifier.wrapContentHeight()
-                        .padding(horizontal = 20.dp,
-                                 vertical = 18.dp),
-                             colors = colors,
-                             shape = RoundedCornerShape(70)) {
-                        Text(text = brandName,
-                             color = Color.White)
-                    }
+    val colorsForPagerItem = listOf(
+        Color(
+            80, 94, 182
+        ), Color(
+            107, 195, 226
+        ), Color(
+            235, 212, 209
+        )
+    )
+    Column(
+        modifier = modifier, verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        Row(
+            modifier = Modifier,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            listOfBrands().forEach { brandName ->
+                RoundBox(
+                    modifier = Modifier.wrapContentHeight().padding(
+                        horizontal = 20.dp, vertical = 18.dp
+                    ), colors = colors, shape = RoundedCornerShape(70)
+                ) {
+                    Text(
+                        text = brandName, color = Color.White
+                    )
                 }
             }
+        }
 
-            Spacer(modifier = Modifier.height(40.dp))
-
-            HorizontalPager(
-                modifier = Modifier.weight(1f),
-                pageCount = listOfBrands().size,
-                state = pagerState,
+        HorizontalPager(
+            modifier = Modifier.weight(1f),
+            pageCount = listOfBrands().size,
+            state = pagerState,
+        ) {
+            ItemCard(
+                isCurrentItem = false,
+                modifier = Modifier.fillMaxSize(),
+                shadowColors = colorsForPagerItem
             ) {
-                ItemCard(isCurrentItem = false,
-                         modifier = Modifier.fillMaxHeight()) {
-                    Box(modifier = Modifier.background(brush = Brush.verticalGradient(colorsForPagerItem)).blur(30
-                                                                                                                    .dp)) {
-                        Text(text = "$it",
-                             modifier = Modifier.align(Alignment.Center),
-                             color = Color.White)
-                    }
+                Box(
+                    modifier = Modifier.background(
+                        brush = Brush.verticalGradient(
+                            colorsForPagerItem
+                        )
+                    )
+                ) {
+                    Text(
+                        text = "$it",
+                        modifier = Modifier.align(Alignment.Center),
+                        color = Color.White
+                    )
                 }
             }
+        }
     }
 }
 

@@ -4,7 +4,8 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.9.0"
-   // id("dev.icerock.mobile.multiplatform-resources")
+
+    // id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
