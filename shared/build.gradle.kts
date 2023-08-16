@@ -37,6 +37,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
+                implementation("org.jetbrains.compose.ui:ui-util:1.4.3")
                 implementation(compose.foundation)
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) implementation(compose.components.resources)
@@ -47,8 +48,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC")
                 api("dev.icerock.moko:mvvm-core:0.16.1") // only ViewModel, EventsDispatcher, Dispatchers.UI
                 api("dev.icerock.moko:mvvm-compose:0.16.1") // api mvvm-core, getViewModel for Compose Multiplatfrom
-             //   api("dev.icerock.moko:resources:0.23.0")
-         //       api("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+                api("org.lighthousegames:logging:1.3.0")
+                //   api("dev.icerock.moko:resources:0.23.0")
+                //       api("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+
 
             }
         }
