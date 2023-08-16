@@ -29,13 +29,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
@@ -186,7 +183,8 @@ fun MiddleContent(modifier: Modifier = Modifier,
                          colors = colors,
                          shape = RoundedCornerShape(70)) {
                     Text(text = brandName,
-                         color = Color.White, maxLines = 1)
+                         color = Color.White,
+                         maxLines = 1)
                 }
             }
         }
@@ -220,12 +218,6 @@ fun MiddleContent(modifier: Modifier = Modifier,
     }
 }
 
-fun Modifier.fadingEdge(brush: Brush) = this.graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-    .drawWithContent {
-        drawContent()
-        drawRect(brush = brush,
-                 blendMode = BlendMode.DstIn)
-    }
 
 
 
