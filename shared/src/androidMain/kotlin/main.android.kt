@@ -21,9 +21,11 @@ fun MainView() {
         systemUIController.setStatusBarColor(Color(32,
                                                    32,
                                                    43))
-        systemUIController.setNavigationBarColor(Color(66,
-                                                       66,
-                                                       81))
+        systemUIController.setNavigationBarColor( Color(
+                53,
+                54,
+                61,
+        ))
 
         onDispose {}
     }
