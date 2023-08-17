@@ -339,11 +339,10 @@ fun MiddleContent(
                         modifier = Modifier.background(
                                 Brush.verticalGradient(colorsForPagerItem),
                                 RoundedCornerShape(40.dp)
-                        )
-                                .fillMaxSize()
+                        ).fillMaxSize()
                 ) {
-
                 }
+
             }
         }
     }
