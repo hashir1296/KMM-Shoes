@@ -97,7 +97,7 @@ fun ShoesListingScreen() {
                 RoundBox(
                         modifier = Modifier.wrapContentHeight()
                                 .padding(5.dp),
-                        colors = colorStopsBg,shape =  RoundedCornerShape(80)
+                        colors = colorStopsBg, shape = RoundedCornerShape(80)
                 ) {
                     RoundBox(
                             colors = colorStops,
@@ -105,7 +105,7 @@ fun ShoesListingScreen() {
                                     .padding(
                                             vertical = 25.dp,
                                             horizontal = 20.dp
-                                    ), shape =  RoundedCornerShape(80)
+                                    ), shape = RoundedCornerShape(80)
                     ) {
                         Image(
                                 painter = painterResource("search.xml"),
@@ -193,6 +193,54 @@ fun BottomBar(modifier: Modifier = Modifier) {
         }) {
             Image(
                     painter = painterResource("running-shoe.xml"),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp).align(Alignment.Center),
+                    colorFilter = ColorFilter.tint(
+                            Color(
+                                    107,
+                                    217,
+                                    244
+                            )
+                    )
+            )
+        }
+
+        Box(modifier = Modifier.size(60.dp).drawBehind {
+            this.drawCircle(
+                    Brush.radialGradient(listOf(Color(
+                            107,
+                            217,
+                            244
+                    ), Color.Transparent)),
+                    alpha = 0.15f,
+            )
+        }) {
+            Image(
+                    painter = painterResource("graph.xml"),
+                    contentDescription = null,
+                    modifier = Modifier.size(30.dp).align(Alignment.Center),
+                    colorFilter = ColorFilter.tint(
+                            Color(
+                                    107,
+                                    217,
+                                    244
+                            )
+                    )
+            )
+        }
+
+        Box(modifier = Modifier.size(60.dp).drawBehind {
+            this.drawCircle(
+                    Brush.radialGradient(listOf(Color(
+                            107,
+                            217,
+                            244
+                    ), Color.Transparent)),
+                    alpha = 0.15f,
+            )
+        }) {
+            Image(
+                    painter = painterResource("settings.xml"),
                     contentDescription = null,
                     modifier = Modifier.size(30.dp).align(Alignment.Center),
                     colorFilter = ColorFilter.tint(
