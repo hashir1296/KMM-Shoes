@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.compose")
     kotlin("plugin.serialization") version "1.9.0"
 
-    // id("dev.icerock.mobile.multiplatform-resources")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 kotlin {
@@ -24,12 +24,10 @@ kotlin {
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
         framework {
-            baseName = "shared"
-            isStatic = true
-         //   export("dev.icerock.moko:resources:0.23.0")
-            //  export("dev.icerock.moko:graphics:0.9.0") // toUIColor here
+            export("dev.icerock.moko:resources:0.23.0")
+            export("dev.icerock.moko:graphics:0.9.0") // toUIColor here
+
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -40,17 +38,16 @@ kotlin {
                 implementation("org.jetbrains.compose.ui:ui-util:1.4.3")
                 implementation(compose.foundation)
                 implementation(compose.material)
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) implementation(compose.components.resources)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class) implementation(
+                    compose.components.resources
+                )
                 implementation("media.kamel:kamel-image:0.7.1")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0-RC")
-                api("dev.icerock.moko:mvvm-core:0.16.1") // only ViewModel, EventsDispatcher, Dispatchers.UI
-                api("dev.icerock.moko:mvvm-compose:0.16.1") // api mvvm-core, getViewModel for Compose Multiplatfrom
-                api("org.lighthousegames:logging:1.3.0")
-                //   api("dev.icerock.moko:resources:0.23.0")
-                //       api("dev.icerock.moko:resources-compose:0.23.0") // for compose multiplatform
+               // api("org.lighthousegames:logging:1.3.0")
+                api("dev.icerock.moko:resources:0.23.0")
 
 
             }
@@ -61,7 +58,7 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.10.1")
                 implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.4.3")
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
+            //    implementation("io.ktor:ktor-client-android:$ktorVersion")
                 // https://mvnrepository.com/artifact/com.google.accompanist/accompanist-systemuicontroller
                 implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
             }
@@ -74,18 +71,13 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
-
-            }
         }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
                 implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.4.3")
-                implementation("io.ktor:ktor-client-java:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")// Use the latest version
-
+                //implementation("io.ktor:ktor-client-java:$ktorVersion")
+             //   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")// Use the latest version
             }
         }
 
@@ -125,7 +117,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling:1.4.3")
     // commonTestImplementation("dev.icerock.moko:resources-test:0.23.0")
 }
-/*multiplatformResources {
-    multiplatformResourcesPackage = "com.myapplication.common" // required
+multiplatformResources {
+    multiplatformResourcesPackage = "com.hashir.shoes" // required
+    multiplatformResourcesClassName = "SharedRes"
     iosBaseLocalizationRegion = "en" // optional, default "en"
-}*/
+}

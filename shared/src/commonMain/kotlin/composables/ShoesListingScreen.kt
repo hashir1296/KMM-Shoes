@@ -48,77 +48,77 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun ShoesListingScreen() {
     val colorStopsBg = listOf(
-            Color(
-                    32,
-                    32,
-                    43
-            ),
-            Color(
-                    53,
-                    54,
-                    61,
-            )
+        Color(
+            32,
+            32,
+            43
+        ),
+        Color(
+            53,
+            54,
+            61,
+        )
     )
 
     val colorStops = listOf(
-            Color(
-                    45,
-                    43,
-                    57
-            ),
-            Color(
-                    66,
-                    66,
-                    81
-            )
+        Color(
+            45,
+            43,
+            57
+        ),
+        Color(
+            66,
+            66,
+            81
+        )
     )
 
     Box(
-            modifier = Modifier.fillMaxSize()
-                    .background(brush = Brush.verticalGradient(colorStopsBg))
-                    .padding(20.dp)
+        modifier = Modifier.fillMaxSize()
+            .background(brush = Brush.verticalGradient(colorStopsBg))
+            .padding(20.dp)
     ) {
         Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                        text = "Explore\nCollections",
-                        color = Color.White,
-                        fontSize = 40.sp,
-                        lineHeight = 55.sp,
-                        fontWeight = FontWeight.Medium
+                    text = "Explore\nCollections",
+                    color = Color.White,
+                    fontSize = 40.sp,
+                    lineHeight = 55.sp,
+                    fontWeight = FontWeight.Medium
                 )
 
                 RoundBox(
-                        modifier = Modifier.wrapContentHeight()
-                                .padding(5.dp),
-                        colors = colorStopsBg, shape = RoundedCornerShape(80)
+                    modifier = Modifier.wrapContentHeight()
+                        .padding(5.dp),
+                    colors = colorStopsBg, shape = RoundedCornerShape(80)
                 ) {
                     RoundBox(
-                            colors = colorStops,
-                            modifier = Modifier.height(100.dp)
-                                    .padding(
-                                            vertical = 25.dp,
-                                            horizontal = 20.dp
-                                    ), shape = RoundedCornerShape(80)
+                        colors = colorStops,
+                        modifier = Modifier.height(100.dp)
+                            .padding(
+                                vertical = 25.dp,
+                                horizontal = 20.dp
+                            ), shape = RoundedCornerShape(80)
                     ) {
                         Image(
-                                painter = painterResource("search.xml"),
-                                contentDescription = null
+                            painter = painterResource("search.xml"),
+                            contentDescription = null
                         )
                     }
                 }
             }
 
             MiddleContent(
-                    Modifier.weight(.5f)
-                            .padding(bottom = 30.dp),
-                    colorStops
+                Modifier.weight(.5f)
+                    .padding(bottom = 30.dp),
+                colorStops
             )
 
             BottomBar(modifier = Modifier)
@@ -128,17 +128,17 @@ fun ShoesListingScreen() {
 
 @Composable
 fun RoundBox(
-        colors: List<Color>,
-        modifier: Modifier = Modifier,
-        shape: Shape = RoundedCornerShape(40),
-        content: @Composable () -> Unit,
+    colors: List<Color>,
+    modifier: Modifier = Modifier,
+    shape: Shape = RoundedCornerShape(40),
+    content: @Composable () -> Unit,
 ) {
     Box(
-            modifier = Modifier.wrapContentWidth()
-                    .clip(shape)
-                    .background(brush = Brush.verticalGradient(colors))
-                    .then(modifier),
-            contentAlignment = Alignment.Center
+        modifier = Modifier.wrapContentWidth()
+            .clip(shape)
+            .background(brush = Brush.verticalGradient(colors))
+            .then(modifier),
+        contentAlignment = Alignment.Center
     ) {
         content()
     }
@@ -146,110 +146,122 @@ fun RoundBox(
 
 @Composable
 fun ItemCard(
-        modifier: Modifier = Modifier,
-        isCurrentItem: Boolean,
-        shadowColors: List<Color>,
-        content: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    isCurrentItem: Boolean,
+    shadowColors: List<Color>,
+    content: @Composable () -> Unit,
 
-        ) {
+    ) {
     Card(
-            modifier = modifier.shadow(
-                    elevation = 10.dp,
-                    spotColor = Color.Red,
-                    shape = RoundedCornerShape(20.dp),
-            ),
+        modifier = modifier.shadow(
+            elevation = 10.dp,
+            spotColor = Color.Red,
             shape = RoundedCornerShape(20.dp),
-            content = content,
-            elevation = 5.dp
+        ),
+        shape = RoundedCornerShape(20.dp),
+        content = content,
+        elevation = 5.dp
     )
 }
 
 
 fun listOfBrands() = listOf(
-        "All",
-        "Nike",
-        "Adidas",
-        "Puma"
+    "All",
+    "Nike",
+    "Adidas",
+    "Puma"
 )
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun BottomBar(modifier: Modifier = Modifier) {
     Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
 
         Box(modifier = Modifier.size(60.dp).drawBehind {
             this.drawCircle(
-                    Brush.radialGradient(listOf(Color(
+                Brush.radialGradient(
+                    listOf(
+                        Color(
                             107,
                             217,
                             244
-                    ), Color.Transparent)),
-                    alpha = 0.15f,
+                        ), Color.Transparent
+                    )
+                ),
+                alpha = 0.15f,
             )
         }) {
             Image(
-                    painter = painterResource("running-shoe.xml"),
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp).align(Alignment.Center),
-                    colorFilter = ColorFilter.tint(
-                            Color(
-                                    107,
-                                    217,
-                                    244
-                            )
+                painter = painterResource("running-shoe.xml"),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp).align(Alignment.Center),
+                colorFilter = ColorFilter.tint(
+                    Color(
+                        107,
+                        217,
+                        244
                     )
+                )
             )
         }
 
         Box(modifier = Modifier.size(60.dp).drawBehind {
             this.drawCircle(
-                    Brush.radialGradient(listOf(Color(
+                Brush.radialGradient(
+                    listOf(
+                        Color(
                             107,
                             217,
                             244
-                    ), Color.Transparent)),
-                    alpha = 0.15f,
+                        ), Color.Transparent
+                    )
+                ),
+                alpha = 0.15f,
             )
         }) {
             Image(
-                    painter = painterResource("graph.xml"),
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp).align(Alignment.Center),
-                    colorFilter = ColorFilter.tint(
-                            Color(
-                                    107,
-                                    217,
-                                    244
-                            )
+                painter = painterResource("graph.xml"),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp).align(Alignment.Center),
+                colorFilter = ColorFilter.tint(
+                    Color(
+                        107,
+                        217,
+                        244
                     )
+                )
             )
         }
 
         Box(modifier = Modifier.size(60.dp).drawBehind {
             this.drawCircle(
-                    Brush.radialGradient(listOf(Color(
+                Brush.radialGradient(
+                    listOf(
+                        Color(
                             107,
                             217,
                             244
-                    ), Color.Transparent)),
-                    alpha = 0.15f,
+                        ), Color.Transparent
+                    )
+                ),
+                alpha = 0.15f,
             )
         }) {
             Image(
-                    painter = painterResource("settings.xml"),
-                    contentDescription = null,
-                    modifier = Modifier.size(30.dp).align(Alignment.Center),
-                    colorFilter = ColorFilter.tint(
-                            Color(
-                                    107,
-                                    217,
-                                    244
-                            )
+                painter = painterResource("settings.xml"),
+                contentDescription = null,
+                modifier = Modifier.size(30.dp).align(Alignment.Center),
+                colorFilter = ColorFilter.tint(
+                    Color(
+                        107,
+                        217,
+                        244
                     )
+                )
             )
         }
     }
@@ -258,91 +270,90 @@ fun BottomBar(modifier: Modifier = Modifier) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MiddleContent(
-        modifier: Modifier = Modifier,
-        colors: List<Color>
+    modifier: Modifier = Modifier,
+    colors: List<Color>
 ) {
     val scrollState = rememberScrollState()
     val pagerState = rememberPagerState(initialPage = 1)
     val colorsForPagerItem = listOf(
-            Color(
-                    80,
-                    94,
-                    182
-            ),
-            Color(
-                    107,
-                    195,
-                    226
-            ),
-            Color(
-                    235,
-                    212,
-                    209
-            )
+        Color(
+            80,
+            94,
+            182
+        ),
+        Color(
+            107,
+            195,
+            226
+        ),
+        Color(
+            235,
+            212,
+            209
+        )
     )
     Column(
-            modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Row(
-                modifier = Modifier.horizontalScroll(scrollState),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            modifier = Modifier.horizontalScroll(scrollState),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             listOfBrands().forEach { brandName ->
                 RoundBox(
-                        modifier = Modifier.wrapContentHeight()
-                                .padding(
-                                        horizontal = 20.dp,
-                                        vertical = 18.dp
-                                ),
-                        colors = colors,
-                        shape = RoundedCornerShape(70)
+                    modifier = Modifier.wrapContentHeight()
+                        .padding(
+                            horizontal = 20.dp,
+                            vertical = 18.dp
+                        ),
+                    colors = colors,
+                    shape = RoundedCornerShape(70)
                 ) {
                     Text(
-                            text = brandName,
-                            color = Color.White,
-                            maxLines = 1
+                        text = brandName,
+                        color = Color.White,
+                        maxLines = 1
                     )
                 }
             }
         }
 
         HorizontalPager(
-                pageCount = listOfBrands().size,
-                state = pagerState,
-                pageSpacing = -20.dp,
-                contentPadding = PaddingValues(horizontal = 30.dp)
+            pageCount = listOfBrands().size,
+            state = pagerState,
+            pageSpacing = -20.dp,
+            contentPadding = PaddingValues(horizontal = 30.dp)
         ) { page ->
             val pageOffset =
-                    ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
+                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction)
             val pageSize by animateFloatAsState(
-                    targetValue = if (pageOffset != 0.0f) 0.75f else 1f,
-                    animationSpec = tween(300)
+                targetValue = if (pageOffset != 0.0f) 0.75f else 1f,
+                animationSpec = tween(300)
             )
             Box(modifier = Modifier.background(Color.Transparent)
-                    .fillMaxSize()
-                    .graphicsLayer {
-                        scaleX = pageSize
-                        scaleY = pageSize
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = pageSize
+                    scaleY = pageSize
 
-                        // We animate the alpha, between 50% and 100%
-                        alpha = lerp(
-                                start = 0.5f,
-                                stop = 1f,
-                                fraction = 1f - pageOffset.coerceIn(
-                                        0f,
-                                        1f
-                                )
+                    // We animate the alpha, between 50% and 100%
+                    alpha = lerp(
+                        start = 0.5f,
+                        stop = 1f,
+                        fraction = 1f - pageOffset.coerceIn(
+                            0f,
+                            1f
                         )
-                    }) {
+                    )
+                }) {
                 Box(
-                        modifier = Modifier.background(
-                                Brush.verticalGradient(colorsForPagerItem),
-                                RoundedCornerShape(40.dp)
-                        ).fillMaxSize()
+                    modifier = Modifier.background(
+                        Brush.verticalGradient(colorsForPagerItem),
+                        RoundedCornerShape(40.dp)
+                    ).fillMaxSize()
                 ) {
                 }
-
             }
         }
     }

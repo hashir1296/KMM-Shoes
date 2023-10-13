@@ -22,8 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import composables.ShoesListingScreen
-import dev.icerock.moko.mvvm.compose.getViewModel
-import dev.icerock.moko.mvvm.compose.viewModelFactory
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import model.BirdClass
@@ -41,14 +39,11 @@ fun BirdsAppTheme(content: @Composable () -> Unit) {
 @Composable
 fun App() {
     BirdsAppTheme {
-        val birdsViewModel: BirdsViewModel = getViewModel<BirdsViewModel>(Unit,
-                                                                          viewModelFactory { BirdsViewModel() })
-        //BirdsPage(birdsViewModel)
         ShoesListingScreen()
     }
 }
 
-@Composable
+/*@Composable
 fun BirdsPage(birdsViewModel: BirdsViewModel) {
     val uiState by birdsViewModel.birdUIState.collectAsState()
     Column(modifier = Modifier.fillMaxSize(),
@@ -80,7 +75,7 @@ fun BirdsPage(birdsViewModel: BirdsViewModel) {
                              })
         }
     }
-}
+}*/
 
 @Composable
 fun BirdImageCell(it: BirdClass) {
